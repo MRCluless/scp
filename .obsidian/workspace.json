@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "c6dee4874ae67164",
+        "id": "fcc4ca29d979721c",
         "type": "tabs",
         "children": [
           {
-            "id": "3aed9da84ca982ba",
+            "id": "5d97d498bc8816de",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -179,7 +179,7 @@
       "bases:Create new base": false
     }
   },
-  "active": "3aed9da84ca982ba",
+  "active": "5d97d498bc8816de",
   "lastOpenFiles": [
     "f1_project_architecture.md",
     "architecture.md",
