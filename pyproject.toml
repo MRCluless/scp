@@ -1,0 +1,10 @@
+[project]
+name = "scp"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "fastf1>=3.8.3",
+    "kafka-python-ng>=2.2.3",
+]
