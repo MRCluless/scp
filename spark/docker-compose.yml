@@ -1,0 +1,5 @@
+services:
+  spark:
+    container_name: spark_master
+    image: apache/spark:latest
+    
