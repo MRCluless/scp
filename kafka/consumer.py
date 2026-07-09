@@ -1,19 +1,36 @@
 import json
 from kafka import KafkaConsumer
 
-consumer = KafkaConsumer(
-    'hamilton',
-    bootstrap_servers=['localhost:9092'],
-    auto_offset_reset='earliest',
-    enable_auto_commit=True,
-    group_id='group1',
-    value_deserializer=lambda x: json.loads(x.decode('utf-8'))
-)
+def main():
+    consumer = KafkaConsumer(
+        'hamilton',
+        bootstrap_servers=['localhost:9092'],
+        auto_offset_reset='earliest',
+        enable_auto_commit=True,
+        group_id='batch-lake-writer',
+        value_deserializer=lambda x: json.loads(x.decode('utf-8'))
+    )
+    current_lap = None
+    lap_data = []
+    try:
+        for message in consumer:
+            data = message.value
+            lap = data.get("Lap")
 
-try:
-    for message in consumer:
-        print(f"Received: {message.value} from partition {message.partition}")
-except KeyboardInterrupt:
-    print("Stopping consumer...")
-finally:
-    consumer.close()
+            if current_lap is not None and lap != current_lap:
+                filename = f"Lap_{current_lap}.json"
+                with open(filename, "w") as f:
+                    json.dump(lap_data, f, indent=4)
+                lap_data = []
+            current_lap = lap
+            lap_data.append(data)
+    except KeyboardInterrupt:
+            if lap_data and current_lap is not None:
+                filename = f"Lap{current_lap}.json"
+                with open(filename, 'w') as f:
+                    json.dump(lap_data, f, indent=4)
+                print(f"Archived {filename} on shutdown.")
+            print("Batch Writer Stopped.")
+
+if __name__ == "__main__":
+    main()

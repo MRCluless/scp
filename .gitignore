@@ -1,3 +1,4 @@
 .f1cache
 .venv
 .vscode
+kafka/*.json
