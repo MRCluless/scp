@@ -19,17 +19,12 @@ def main():
 
             if current_lap is not None and lap != current_lap:
                 filename = f"Lap_{current_lap}.json"
-                with open(filename, "w") as f:
+                with open(f"../s3/{filename}", "w") as f:
                     json.dump(lap_data, f, indent=4)
                 lap_data = []
             current_lap = lap
             lap_data.append(data)
     except KeyboardInterrupt:
-            if lap_data and current_lap is not None:
-                filename = f"Lap{current_lap}.json"
-                with open(filename, 'w') as f:
-                    json.dump(lap_data, f, indent=4)
-                print(f"Archived {filename} on shutdown.")
             print("Batch Writer Stopped.")
 
 if __name__ == "__main__":
