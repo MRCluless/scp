@@ -1,10 +1,21 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, avg, max as spark_max, sum as spark_sum, when
+from pyspark.sql.functions import col, avg, max as spark_max,min as spark_min, sum as spark_sum, when,count,round
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType, BooleanType, TimestampType
 from pathlib import Path
 import os
+from pyspark.sql.functions import round
+import shutil
 
+spark_temp_dir = r"C:\SparkTemp"
 
+# Create the folder if it doesn't exist
+if not os.path.exists(spark_temp_dir):
+    os.makedirs(spark_temp_dir)
+
+# Override the temp paths for this process
+os.environ["TMPDIR"] = spark_temp_dir
+os.environ["TEMP"] = spark_temp_dir
+os.environ["TMP"] = spark_temp_dir
 os.environ['HADOOP_HOME'] = r'C:\hadoop'
 os.environ['PATH'] = r'C:\hadoop\bin' + os.pathsep + os.environ.get('PATH', '')
 
@@ -54,6 +65,18 @@ def main():
     print("Inferred Schema:")
     historical_df.printSchema()
 
+
+      #Lap Analysis
+    print("\n ==================LAP PERFORMANCE ANALYSIS=============")
+    lap_analysis = (historical_df.groupBy("Lap").agg(round(avg("Speed"),2).alias("Average_Speed"),spark_max("Speed").alias("Maximum_Speed"),spark_min("Speed").alias("Minimum_Speed"),round(avg("RPM"),2).alias("Average_RPM"),spark_max("RPM").alias("Average_RPM"),spark_max("RPM"),round(avg("Throttle"),2).alias("Average_TRhrottle"),spark_sum(when(col("Brake")==True,1).otherwise(0)).alias("Brake_Events"),spark_sum(when(col("DRS")>0,1).otherwise(0)).alias("DRS_Activations"),spark_max("Distance").alias("Lap_Distance"),count("*").alias("Telemetry_Points")).orderBy("Lap"))
+    lap_analysis.show(100, truncate= False)
+
+
+    print("\n =============Fastest Laps========")
+    lap_analysis.orderBy(
+         col("Average_Speed").desc()
+    ).show(10)
+
     # 3. Compute the Meaningful Aggregate (Batch Processing)
     # We group by Lap and calculate key performance metrics
     batch_results = historical_df.groupBy("Lap").agg(
@@ -71,13 +94,6 @@ def main():
     spark.stop()
 
 
-#Lap Analysis
-print("\n ==================LAP PERFORMANCE ANALYSIS=============")
-lap_analysis = (historical_df.groupBy("Lap").agg(round(avg("Speed"),2).alias("Average_Speed"),spark_max("Speed").alias("Maximum_Speed"),spark_min("Speed").alias("Minimum_Speed"),round(avg("RPM"),2).alias("Average_RPM"),spark_max("RPM").alias("Average_RPM"),spark_max("RPM"),round(avg("Throttle"),2).alias("Average_TRhrottle"),spark_sum(when(col("Brake")==True,1).otherwise(0)).alias("Brake_Events"),spark_sum(when(col("DRS")>0,1).otherwise(0)).alias("DRS_Activations"),spark_max("Distance").alias("Lap_Distance"),count("*").alias("Telemetry_Points")).orderBy("Lap"))
-lap_analysis.show(100, truncate= False)
 
-
-print("/n =============Fastest Laps========")
-lap_analysis.orderBy(col("Average_Speed").desc().show(10))
 if __name__ == "__main__":
     main()
