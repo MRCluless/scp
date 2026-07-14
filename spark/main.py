@@ -34,9 +34,6 @@ import platform
 import builtins
 
 
-
-
-
 os.environ["PYSPARK_PYTHON"] = "python"
 
 os.environ["PYSPARK_DRIVER_PYTHON"] = "python"
