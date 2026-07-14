@@ -1,0 +1,3 @@
+Lap,Average_Speed,Maximum_Speed,Minimum_Speed,Average_RPM,Maximum_RPM,Average_Throttle,Brake_Events,DRS_Activations,Lap_Distance,Telemetry_Points
+23,199.96,333.0,93.0,10341.38,12267.0,58.78,122,0,1457424.4481424163,604
+39,202.67,330.0,92.0,10747.65,12183.0,63.65,111,0,1480400.6316972587,617
