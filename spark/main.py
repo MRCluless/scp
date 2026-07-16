@@ -53,7 +53,8 @@ def main():
     # 2. Load the JSON files
     # PySpark can read a single file, a wildcard (*), or a whole S3 bucket directory
     # Update this path to where your JSON files are stored (e.g., "s3://your-bucket/laps/*.json")
-    s3_dir = Path(__file__).resolve().parent.parent / "s3"
+    s3_dir = "s3://25140990-scp-f1-data/*/*.json"
+    # s3_dir = Path(__file__).resolve().parent.parent / "s3"
     # historical_df = spark.read.load(str(s3_dir))
     historical_df = spark.read \
     .format("json") \
