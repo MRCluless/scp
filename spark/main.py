@@ -1,10 +1,45 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, avg, max as spark_max,min as spark_min, sum as spark_sum, when,count,round
-from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType, BooleanType, TimestampType
+
+from pyspark.sql.functions import (
+    col,
+    avg,
+    max as spark_max,
+    min as spark_min,
+    sum as spark_sum,
+    count,
+    countDistinct,
+    when,
+    current_timestamp,
+    stddev,
+    round as spark_round
+)
+
+from pyspark.sql.types import (
+    StructType,
+    StructField,
+    StringType,
+    IntegerType,
+    DoubleType,
+    BooleanType,
+    TimestampType
+)
+
+from pyspark import StorageLevel
+
 from pathlib import Path
+
 import os
-from pyspark.sql.functions import round
-import shutil
+import time
+import platform
+import builtins
+
+
+os.environ["PYSPARK_PYTHON"] = "python"
+
+os.environ["PYSPARK_DRIVER_PYTHON"] = "python"
+
+
+
 
 spark_temp_dir = r"C:\SparkTemp"
 
@@ -16,8 +51,23 @@ if not os.path.exists(spark_temp_dir):
 os.environ["TMPDIR"] = spark_temp_dir
 os.environ["TEMP"] = spark_temp_dir
 os.environ["TMP"] = spark_temp_dir
-os.environ['HADOOP_HOME'] = r'C:\hadoop'
-os.environ['PATH'] = r'C:\hadoop\bin' + os.pathsep + os.environ.get('PATH', '')
+
+
+
+os.environ["HADOOP_HOME"] = r"C:\hadoop"
+
+
+os.environ["PATH"] = (
+    r"C:\hadoop\bin"
+    +
+    os.pathsep
+    +
+    os.environ.get(
+        "PATH",
+        ""
+    )
+)
+
 
 def main():
  
@@ -90,5 +140,9 @@ def main():
 
 
 
+
+
+
 if __name__ == "__main__":
+
     main()
