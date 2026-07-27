@@ -1,0 +1,7 @@
+Lap,Sector,Sector_Average_Speed,Sector_Average_RPM,Telemetry_Points
+32,Sector_1,228.24,10911.24,241
+32,Sector_2,181.34,10592.44,307
+32,Sector_3,249.61,11274.62,67
+60,Sector_2,178.22,10335.01,304
+60,Sector_1,227.04,10713.33,247
+60,Sector_3,251.44,10957.95,67

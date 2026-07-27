@@ -1,0 +1,2 @@
+Job_Name,Records_Processed,Execution_Time_Seconds,Records_Per_Second,Spark_Parallelism
+F1_Batch,41154,119.21301531791687,345.2139843141342,200

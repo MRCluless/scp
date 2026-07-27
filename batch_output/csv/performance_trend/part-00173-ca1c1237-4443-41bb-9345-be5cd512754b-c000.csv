@@ -1,0 +1,2 @@
+Lap,Average_Speed,Maximum_Speed,Minimum_Speed,Average_RPM,Maximum_RPM,Average_Throttle,Brake_Events,DRS_Activations,Lap_Distance,Telemetry_Points,Performance_Status
+42,167.79,310.0,0.0,10207.64,12399.0,56.75,174,0,1485945.714530823,753,DEGRADED

@@ -2,3 +2,6 @@
 .venv
 .vscode
 kafka/*.json
+./s3/
+data
+aws
