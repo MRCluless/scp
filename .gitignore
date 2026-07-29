@@ -5,3 +5,4 @@ kafka/*.json
 ./s3/
 data
 aws
+/batch_output
